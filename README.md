@@ -1,3 +1,10 @@
+ ```
+Google has announced that, starting in 2026/2027, all apps on certified Android devices
+will require the developer to submit personal identity details directly to Google.
+Since the developers of this app do not agree to this requirement, this app will no longer 
+work on certified Android devices after that time.
+```
+
 <pre>Send a coffee to 
 woheller69@t-online.de 
 <a href= "https://www.paypal.com/signin"><img  align="left" src="https://www.paypalobjects.com/webstatic/de_DE/i/de-pp-logo-150px.png"></a>
@@ -20,14 +27,21 @@ Or via this link (with fees)
 | [<img src="https://github.com/woheller69/gptassist/blob/master/fastlane/metadata/android/en-US/images/icon.png" width="50">](https://f-droid.org/packages/org.woheller69.gptassist/) | [<img src="https://github.com/woheller69/dumpseeker/blob/main/fastlane/metadata/android/en-US/images/icon.png" width="50">](https://f-droid.org/packages/org.woheller69.dumpseeker/) | [<img src="https://github.com/woheller69/huggingassist/blob/master/fastlane/metadata/android/en-US/images/icon.png" width="50">](https://f-droid.org/packages/org.woheller69.hugassist/) |
 | **FREE Browser** | **whoBIRD** | **PeakOrama** |
 | [<img src="https://github.com/woheller69/browser/blob/newmaster/fastlane/metadata/android/en-US/images/icon.png" width="50">](https://f-droid.org/packages/org.woheller69.browser/) | [<img src="https://github.com/woheller69/whoBIRD/blob/master/fastlane/metadata/android/en-US/images/icon.png" width="50">](https://f-droid.org/packages/org.woheller69.whobird/) | [<img src="https://github.com/woheller69/PeakOrama/blob/master/fastlane/metadata/android/en-US/images/icon.png" width="50">](https://f-droid.org/packages/org.woheller69.PeakOrama/) |
-| **Whisper** | **Seamless** | |
-| [<img src="https://github.com/woheller69/whisperIME/blob/master/fastlane/metadata/android/en-US/images/icon.png" width="50">](https://f-droid.org/packages/org.woheller69.whisper/) | [<img src="https://github.com/woheller69/seamless/blob/master/fastlane/metadata/android/en-US/images/icon.png" width="50">](https://f-droid.org/packages/org.woheller69.seemless/) | |
+| **Whisper** | **Seamless** | **SherpaTTS** |
+| [<img src="https://github.com/woheller69/whisperIME/blob/master/fastlane/metadata/android/en-US/images/icon.png" width="50">](https://f-droid.org/packages/org.woheller69.whisper/) | [<img src="https://github.com/woheller69/seamless/blob/master/fastlane/metadata/android/en-US/images/icon.png" width="50">](https://f-droid.org/packages/org.woheller69.seemless/) | [<img src="https://github.com/woheller69/ttsengine/blob/master/fastlane/metadata/android/en-US/images/icon.png" width="50">](https://f-droid.org/packages/org.woheller69.ttsengine/) |
 
 # gptAssist
 
 gptAssist is a simple WebView wrapper for ChatGPT. It blocks all URLs which are not essential.
 It does not support login via Apple, Microsoft or Google account.
 Please use a web browser for initial sign up.
+
+- 🔒 **Privacy-focused**: Blocks unnecessary URLs and tracking
+- 🎯 **Focused interface**: Clean chat experience without browser distractions  
+- 🔄 **Toggle blocking**: Switch between restricted and unrestricted modes
+- 📁 **File support**: Upload files for analysis and conversation
+- 🎤 **Voice input**: Support for voice conversations
+- 📱 **Lightweight**: Minimal app focused on core functionality
 
 You can switch on/off blocking by clicking the button at the top right.
 Swipe up a bit to hide the button.

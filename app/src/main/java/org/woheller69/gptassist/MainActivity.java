@@ -53,6 +53,9 @@ import android.webkit.ValueCallback;
 import android.net.Uri;
 
 import androidx.webkit.URLUtilCompat;
+
+import org.woheller69.freeDroidWarn.FreeDroidWarn;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -154,7 +157,7 @@ public class MainActivity extends Activity {
 
             @Override
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
                     }
@@ -216,8 +219,11 @@ public class MainActivity extends Activity {
                 if (!allowed) {
                     Log.d(TAG, "[shouldInterceptRequest][NOT ON ALLOWLIST] Blocked access to " + request.getUrl().getHost());
                     if (request.getUrl().getHost().equals("login.microsoftonline.com") || request.getUrl().getHost().equals("accounts.google.com") || request.getUrl().getHost().equals("appleid.apple.com")){
-                        Toast.makeText(context, context.getString(R.string.error_microsoft_google), Toast.LENGTH_LONG).show();
-                        resetChat();
+                        // ✅ Post ALL UI/WebView operations to main thread
+                        view.post(() -> {
+                            Toast.makeText(context, context.getString(R.string.error_microsoft_google), Toast.LENGTH_LONG).show();
+                            resetChat(); // Now safe: runs on UI thread where WebView was created
+                        });
                     }
                     if (request.getUrl().toString().contains("gravatar.com/avatar/")) {
                         AssetManager assetManager = getAssets();
@@ -253,8 +259,11 @@ public class MainActivity extends Activity {
                 if (!allowed) {
                     Log.d(TAG, "[shouldOverrideUrlLoading][NOT ON ALLOWLIST] Blocked access to " + request.getUrl().getHost());
                     if (request.getUrl().getHost().equals("login.microsoftonline.com") || request.getUrl().getHost().equals("accounts.google.com") || request.getUrl().getHost().equals("appleid.apple.com")){
-                        Toast.makeText(context, context.getString(R.string.error_microsoft_google), Toast.LENGTH_LONG).show();
-                        resetChat();
+                        // ✅ Post ALL UI/WebView operations to main thread
+                        view.post(() -> {
+                            Toast.makeText(context, context.getString(R.string.error_microsoft_google), Toast.LENGTH_LONG).show();
+                            resetChat(); // Now safe: runs on UI thread where WebView was created
+                        });
                     }
                     return true; //Deny URLs not on ALLOWLIST
                 }
@@ -297,6 +306,7 @@ public class MainActivity extends Activity {
 
         //Load ChatGPT
         chatWebView.loadUrl(urlToLoad);
+        FreeDroidWarn.showWarningOnUpgrade(this, BuildConfig.VERSION_CODE);
         if (GithubStar.shouldShowStarDialog(this)) GithubStar.starDialog(this,"https://github.com/woheller69/gptassist");
     }
 
