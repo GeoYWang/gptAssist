@@ -77,6 +77,40 @@ public class MainActivity extends Activity {
     private ValueCallback<Uri[]> mUploadMessage;
     private final static int FILE_CHOOSER_REQUEST_CODE = 1;
 
+    // ===== [新增] 廣告移除 JS 腳本 =====
+    private String getAdBlockScript() {
+    return "(function() {" +
+        "  function removeAds() {" +
+        "    document.querySelectorAll('*').forEach(function(el) {" +
+        "      if (el.children.length === 0 && el.textContent.trim() === 'Sponsored') {" +
+        "        var container = el;" +
+        "        for (var i = 0; i < 6; i++) {" +
+        "          if (container.parentElement) container = container.parentElement;" +
+        "        }" +
+        "        if (container && container.parentElement) container.remove();" +
+        "      }" +
+        "    });" +
+        "    document.querySelectorAll('*').forEach(function(el) {" +
+        "      if (el.children.length === 0 &&" +
+        "          el.textContent.includes('Ads do not influence the answers')) {" +
+        "        var container = el;" +
+        "        for (var i = 0; i < 6; i++) {" +
+        "          if (container.parentElement) container = container.parentElement;" +
+        "        }" +
+        "        if (container && container.parentElement) container.remove();" +
+        "      }" +
+        "    });" +
+        "  }" +
+        "  removeAds();" +
+        "  if (!window._adBlockObserverActive) {" +
+        "    window._adBlockObserverActive = true;" +
+        "    new MutationObserver(function() { removeAds(); })" +
+        "      .observe(document.body, { childList: true, subtree: true });" +
+        "  }" +
+        "})();";
+    }
+
+    
     @Override
     protected void onPause() {
         if (chatCookieManager!=null) chatCookieManager.flush();
@@ -198,6 +232,13 @@ public class MainActivity extends Activity {
         });  //needed to share link
 
         chatWebView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                view.evaluateJavascript(getAdBlockScript(), null);
+            }
+            
             //Keep these in sync!
             @Override
             public WebResourceResponse shouldInterceptRequest(final WebView view, WebResourceRequest request) {
