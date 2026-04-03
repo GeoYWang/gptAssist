@@ -77,37 +77,25 @@ public class MainActivity extends Activity {
     private ValueCallback<Uri[]> mUploadMessage;
     private final static int FILE_CHOOSER_REQUEST_CODE = 1;
 
-    // ===== [新增] 廣告移除 JS 腳本 =====
+    // block ads
     private String getAdBlockScript() {
-    return "(function() {" +
-        "  function removeAds() {" +
-        "    document.querySelectorAll('*').forEach(function(el) {" +
-        "      if (el.children.length === 0 && el.textContent.trim() === 'Sponsored') {" +
-        "        var container = el;" +
-        "        for (var i = 0; i < 6; i++) {" +
-        "          if (container.parentElement) container = container.parentElement;" +
-        "        }" +
-        "        if (container && container.parentElement) container.remove();" +
-        "      }" +
-        "    });" +
-        "    document.querySelectorAll('*').forEach(function(el) {" +
-        "      if (el.children.length === 0 &&" +
-        "          el.textContent.includes('Ads do not influence the answers')) {" +
-        "        var container = el;" +
-        "        for (var i = 0; i < 6; i++) {" +
-        "          if (container.parentElement) container = container.parentElement;" +
-        "        }" +
-        "        if (container && container.parentElement) container.remove();" +
-        "      }" +
-        "    });" +
-        "  }" +
-        "  removeAds();" +
-        "  if (!window._adBlockObserverActive) {" +
-        "    window._adBlockObserverActive = true;" +
-        "    new MutationObserver(function() { removeAds(); })" +
-        "      .observe(document.body, { childList: true, subtree: true });" +
-        "  }" +
-        "})();";
+        return "(function() {" +
+            "  function removeAds() {" +
+            "    document.querySelectorAll('div.border-token-border-default.mt-2.border-t.py-4.text-sm')" +
+            "      .forEach(function(el) {" +
+            // double check
+            "        if (el.textContent.includes('Sponsored')) {" +
+            "          el.remove();" +
+            "        }" +
+            "      });" +
+            "  }" +
+            "  removeAds();" +
+            "  if (!window._adBlockObserverActive) {" +
+            "    window._adBlockObserverActive = true;" +
+            "    new MutationObserver(function() { removeAds(); })" +
+            "      .observe(document.body, { childList: true, subtree: true });" +
+            "  }" +
+            "})();";
     }
 
     
